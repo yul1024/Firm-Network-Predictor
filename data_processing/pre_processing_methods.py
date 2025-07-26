@@ -78,6 +78,6 @@ class PreProcessingMethods:
                 df = pd.read_json(item_path, lines=True)
                 df_ = df[df['date'] >= start_time]
                 df_ = df_[df_['date'] <= end_time]
-                df_.to_json(dir_to_results / f"{i}.json", orient='records', force_ascii=False)
+                df_.to_json(dir_to_results / f"{i}.jsonl", orient='records', force_ascii=False)
                 print(f"Saved records in {dir_to_results / f'{i}.jsonl'}")
 
