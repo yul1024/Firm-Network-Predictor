@@ -24,7 +24,7 @@ class LDataModule(pl.LightningDataModule):
 
     def setup(
         self,
-        stage: Literal['fit', 'validate', 'test', 'predict'] = None
+        stage: Literal['fit', 'validate', 'test', 'predict'] = None,
     ) -> None:
         ...
 
@@ -50,7 +50,7 @@ class LDataModule(pl.LightningDataModule):
 
     def teardown(
         self,
-        stage: Literal['fit', 'validate', 'test', 'predict'] = None
+        stage: Literal['fit', 'validate', 'test', 'predict'] = None,
     ) -> None:
         ...
 
