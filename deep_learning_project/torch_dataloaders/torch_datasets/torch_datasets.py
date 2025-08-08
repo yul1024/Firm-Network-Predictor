@@ -42,20 +42,16 @@ class DFDataset(Dataset):
         self,
         df: pd.DataFrame,
     ):
-        self.df = df
+        self.data = df.drop(columns=['target']).values
+        self.target = df['target'].values
 
     def __len__(self) -> int:
-        return len(self.df)
+        return len(self.data)
 
     def __getitem__(self, index) -> dict:
-        # 加载 (这个方法就是df本身。)
-
-        # 处理
-
-        # 组合并返回
         return dict(
-            # 'target':
-            # 'data':
+            target=torch.tensor(self.target[index], dtype=torch.float32),
+            data=torch.tensor(self.data[index], dtype=torch.float32)
         )
 
     def process_data(
@@ -65,50 +61,4 @@ class DFDataset(Dataset):
         """
         可以用一个工具类来实现，处理完需要是tensor。
         """
-
-
-class ControlDataset(Dataset):
-    """
-    复杂一点的情况，数据不能完全读入内存，由控制文件进行管理。
-
-    约定控制文件的内容:
-        - 标签或目标值。
-        - 读取实际数据的路径或方法。
-    """
-    def __init__(
-        self,
-        control_df: pd.DataFrame,
-    ):
-        self.control_df = control_df
-
-    def __len__(self) -> int:
-        """
-        控制文件的长度即实际数据的长度。。
-
-        Returns:
-            int: 数据的数量。
-        """
-        return len(self.control_df)
-
-    def __getitem__(self, index) -> dict:
-        """
-        约定的较好实践:
-            - 这个方法进行的操作:
-                - 根据控制文件加载数据。
-                - 使用处理工具类处理数据。
-                - 组合为dict返回。
-            - 以dict形式返回，约定:
-                - key1: 'target' 分类任务或回归任务的目标。
-                - key2: 'data' 输入模型的数据。
-                    如果是多模态数据，可以增加kv，但是需要在这里已经处理好。
-        """
-        # 加载
-
-        # 处理
-
-        # 组合并返回
-        return dict(
-            # 'target':
-            # 'data':
-        )
 
