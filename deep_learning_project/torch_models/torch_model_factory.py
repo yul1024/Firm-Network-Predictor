@@ -19,11 +19,11 @@ class TorchModelFactory:
         torch_model_name: Literal['demo'],
         torch_model_config: dict,
     ) -> torch.nn.Module:
-        if torch_model_name == 'normal':
-            return TorchModelFactory.create_normal_torch_model(torch_model_config=torch_model_config)
+        if torch_model_name == 'demo':
+            return TorchModelFactory.create_demo_torch_model(torch_model_config=torch_model_config)
 
     @staticmethod
-    def create_normal_torch_model(
+    def create_demo_torch_model(
         torch_model_config: dict,
     ) -> torch.nn.Module:
         return DemoModel(**torch_model_config)
