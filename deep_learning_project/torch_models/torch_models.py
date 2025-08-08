@@ -19,7 +19,7 @@ from typing import TYPE_CHECKING
 # if TYPE_CHECKING:
 
 
-class NormalModel(torch.nn.Module):
+class DemoModel(torch.nn.Module):
     def __init__(
         self,
         torch_model_config: dict,
@@ -42,10 +42,4 @@ class NormalModel(torch.nn.Module):
     ) -> torch.Tensor:
         outputs: torch.Tensor = self.backbone(inputs)
         return outputs
-
-    def freeze(
-        self,
-    ) -> None:
-        for param in self.backbone.parameters():
-            param.requires_grad = False
 
