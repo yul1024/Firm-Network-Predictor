@@ -23,8 +23,12 @@ class LossFnFactory:
         ],
         loss_fn_config: dict,
     ) -> torch.nn.Module:
+        # 分类任务。
         if loss_fn_name == 'cross_entropy':
             return LossFnFactory.create_cross_entropy_loss_fn(loss_fn_config=loss_fn_config)
+        # 回归任务。
+        elif loss_fn_name == 'mse':
+            return LossFnFactory.create_mse_loss_fn(loss_fn_config=loss_fn_config)
 
     """<!--分类任务-start-->"""
 
