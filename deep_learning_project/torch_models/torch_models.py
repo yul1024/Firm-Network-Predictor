@@ -25,21 +25,30 @@ class DemoModel(torch.nn.Module):
         torch_model_config: dict,
     ):
         super().__init__()
-        # 导入配置并分配。
-        self.config = torch_model_config
-        self.backbone_config = torch_model_config['backbone']
-        self.choice = self.backbone_config['choice']
-        self.backbone_model_config = self.backbone_config[self.choice]
-
-        self.is_freeze = torch_model_config['is_freeze']
-
-        if self.is_freeze:
-            self.freeze()
+        self.self_attention_layer = torch.nn.MultiheadAttention(
+            embed_dim=torch_model_config['embed_dim'],
+            num_heads=torch_model_config['num_heads'],
+            batch_first=True,
+        )
+        self.ffn_layer = torch.nn.Sequential(
+            torch.nn.Linear(
+                in_features=torch_model_config['embed_dim'],
+                out_features=torch_model_config['ffn_embed_dim']
+            ),
+            torch.nn.ReLU(),
+            torch.nn.Linear(
+                in_features=torch_model_config['ffn_embed_dim'],
+                out_features=1,
+            ),
+        )
 
     def forward(
         self,
         inputs: torch.Tensor,
     ) -> torch.Tensor:
-        outputs: torch.Tensor = self.backbone(inputs)
+        attention_outputs, attention_score = self.self_attention_layer(
+            inputs, inputs, inputs
+        )
+        outputs = self.ffn_layer(attention_outputs)
         return outputs
 
