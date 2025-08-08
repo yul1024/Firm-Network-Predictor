@@ -1,4 +1,6 @@
 """
-数据集加载部分。
+基于原生torch的dataset的定义。
+
+封装了原始各种格式数据的加载，会在torch_dataloaders中使用。
 """
 
