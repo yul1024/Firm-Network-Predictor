@@ -26,7 +26,7 @@ from typing import TYPE_CHECKING
 # if TYPE_CHECKING:
 
 
-class DFDataset(Dataset):
+class DemoDataset(Dataset):
     """
     torch中实现dataset的基础。
 
@@ -40,18 +40,17 @@ class DFDataset(Dataset):
     """
     def __init__(
         self,
-        df: pd.DataFrame,
+        jsonline_data: list[dict[str, list[float]]],
     ):
-        self.data = df.drop(columns=['target']).values
-        self.target = df['target'].values
+        self.jsonline_data = jsonline_data
 
     def __len__(self) -> int:
-        return len(self.data)
+        return len(self.jsonline_data)
 
     def __getitem__(self, index) -> dict:
         return dict(
-            target=torch.tensor(self.target[index], dtype=torch.float32),
-            data=torch.tensor(self.data[index], dtype=torch.float32)
+            target=torch.tensor(self.jsonline_data[index]['target'], dtype=torch.float32),
+            data=torch.tensor(self.jsonline_data[index]['data'], dtype=torch.float32)
         )
 
     def process_data(
