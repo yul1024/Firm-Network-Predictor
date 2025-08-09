@@ -11,7 +11,7 @@ from __future__ import annotations
 
 # 同一文件夹下导入定义的各种dataset。
 from .torch_datasets import (
-    DFDataset,
+    DemoDataset,
     ControlDataset,
 )
 
