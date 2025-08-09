@@ -36,8 +36,10 @@ class CollateFnFactory:
             target_list = [data['target'] for data in batch]
             data_list = [data['data'] for data in batch]
             # 组合。
-            targets = torch.stack(target_list)
-            datas = torch.stack(data_list)
+            # targets = torch.stack(target_list)
+            # datas = torch.stack(data_list)
+            targets = pad_sequence(target_list, batch_first=True)
+            datas = pad_sequence(data_list, batch_first=True)
             # 以dict返回。
             return dict(
                 targets=targets,
